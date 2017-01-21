@@ -25,7 +25,7 @@ goldCOT_df['Last'] = goldCOT_df['Last'].interpolate(method='time')
 
 
 '''
-Create a number of new features:
+Create a number of new feature types:
 (1) Open Interest Index
 (2) Commercial Position Index
 (3) Small Trader Position Index
@@ -36,4 +36,20 @@ Create a number of new features:
 (8) Trends: Price Down & OI Down (True / False)
 
 '''
+
+'''
+Open Interest Index
+Normalized form of OI to determine if there is enthusiasm in the market.
+High value may indicate over enthusiasm
+
+OI Index = ((OI(recent) - OI(min)) / (OI(max) - OI(min))) * 100
+
+
+'''
+
+# Open Interest Lookback Windows
+OIlookback1 = 26
+OILookback2 = 52
+
+
 
