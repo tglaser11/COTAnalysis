@@ -51,5 +51,5 @@ OI Index = ((OI(recent) - OI(min)) / (OI(max) - OI(min))) * 100
 OIlookback1 = 26
 OILookback2 = 52
 
-
+# goldCOT_df['OIIndex1'] =
 
