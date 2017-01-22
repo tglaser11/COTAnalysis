@@ -121,6 +121,32 @@ lb_window = goldCOT_df['netST'].rolling(window = lookback2)
 goldCOT_df['CPPercentIndex2'] = ((goldCOT_df['CPPercent'] - lb_window.min()) / (lb_window.max() - lb_window.min())) * 100
 
 
+# drop columns no longer needed
+goldCOT_df = goldCOT_df.drop([ 'Producer/Merchant/Processor/User Longs',
+       'Producer/Merchant/Processor/User Shorts', 'Swap Dealer Longs',
+       'Swap Dealer Shorts', 'Swap Dealer Spreads', 'Money Manager Longs',
+       'Money Manager Shorts', 'Money Manager Spreads',
+       'Other Reportable Longs', 'Other Reportable Shorts',
+       'Other Reportable Spreads', 'Total Reportable Longs',
+       'Total Reportable Shorts', 'Non Reportable Longs',
+       'Non Reportable Shorts'], axis=1)
+
+
+'''
+Create binary target features that determine trend at 2wks, 4wks, 6wks, 8wks, 12 wks, 24 wks
+'''
+trend_lbs = [2, 4, 6, 8, 12]
+
+# Trend = 1 if up and 0 if down
+goldCOT_df['2wktrend'] = (goldCOT_df["Last"].shift(-2) > goldCOT_df["Last"]).astype(int)
+goldCOT_df['4wktrend'] = (goldCOT_df["Last"].shift(-4) > goldCOT_df["Last"]).astype(int)
+goldCOT_df['6wktrend'] = (goldCOT_df["Last"].shift(-6) > goldCOT_df["Last"]).astype(int)
+goldCOT_df['8wktrend'] = (goldCOT_df["Last"].shift(-8) > goldCOT_df["Last"]).astype(int)
+goldCOT_df['12wktrend'] = (goldCOT_df["Last"].shift(-12) > goldCOT_df["Last"]).astype(int)
+
+# drop last 12 wks of data due to no target data
+goldCOT_df = goldCOT_df[:-12]
+
 goldCOT_df.tail()
 
 
