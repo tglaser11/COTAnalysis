@@ -14,7 +14,7 @@ goldprice_df = quandl.get('CHRIS/CME_GC1', start_date="2006-06-01")
 
 
 # Drop unwanted fields
-goldprice_df = goldprice_df.drop(['Open','High','Low','Change','Settle','Volume','Previous Day Open Interest'], axis=1)
+goldprice_df = goldprice_df.drop(['Open','High','Low','Change','Settle','Volume','Open Interest'], axis=1)
 
 # Combine datasets
 goldCOT_df = pd.concat([goldCOT_df, goldprice_df], axis=1, join_axes=[goldCOT_df.index])
@@ -51,5 +51,13 @@ OI Index = ((OI(recent) - OI(min)) / (OI(max) - OI(min))) * 100
 OIlookback1 = 26
 OILookback2 = 52
 
-# goldCOT_df['OIIndex1'] =
+lb_window = goldCOT_df['Open Interest'].rolling(window = OIlookback1)
+goldCOT_df['OIIndex1'] = ((goldCOT_df['Open Interest'] - lb_window.min()) / (lb_window.max() - lb_window.min())) * 100
+
+lb_window = goldCOT_df['Open Interest'].rolling(window = OIlookback2)
+goldCOT_df['OIIndex2'] = ((goldCOT_df['Open Interest'] - lb_window.min()) / (lb_window.max() - lb_window.min())) * 100
+
+
+
+
 
