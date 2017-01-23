@@ -146,7 +146,128 @@ goldCOT_df['12wktrend'] = (goldCOT_df["Last"].shift(-12) > goldCOT_df["Last"]).a
 
 # drop last 12 wks of data due to no target data
 goldCOT_df = goldCOT_df[:-12]
+goldCOT_df = goldCOT_df.dropna()
 
-goldCOT_df.tail()
+## Test 2 week predictions
+X = goldCOT_df[['CPPercentIndex1', 'CPPercentIndex2', 'STIndex1', 'STIndex2', 'OIIndex1', 'OIIndex2']].copy()
+Y2 = goldCOT_df['2wktrend']
+Y4 = goldCOT_df['4wktrend']
+Y6 = goldCOT_df['6wktrend']
+Y8 = goldCOT_df['8wktrend']
+Y12 = goldCOT_df['12wktrend']
+
+from sklearn import linear_model
+from sklearn import metrics
+
+## 2wk predictoin
+
+# segment data into test and training sets
+X_train = X[:int(len(X)*.8)]
+Y_train = Y2[:int(len(X)*.8)]
+X_test = X[int(len(X)*.8):]
+Y_test = Y2[int(len(X)*.8):]
+
+# train using all market data
+logit = linear_model.LogisticRegression(C=1)
+logit.fit(X_train, Y_train)
+
+# predict on test data
+predicted = logit.predict(X_test)
+
+# evaluate
+print('logistic regression 2wk prediction')
+print(metrics.f1_score(Y_test, predicted))
+print(logit.score(X_test,Y_test))
+
+
+
+## 4wk predictoin
+
+# segment data into test and training sets
+X_train = X[:int(len(X)*.8)]
+Y_train = Y4[:int(len(X)*.8)]
+X_test = X[int(len(X)*.8):]
+Y_test = Y4[int(len(X)*.8):]
+
+# train using all market data
+logit = linear_model.LogisticRegression(C=1)
+logit.fit(X_train, Y_train)
+
+# predict on test data
+predicted = logit.predict(X_test)
+
+# evaluate
+print('logistic regression 4wk prediction')
+print(metrics.f1_score(Y_test, predicted))
+print(logit.score(X_test,Y_test))
+
+
+
+## 6wk prediction
+
+# segment data into test and training sets
+X_train = X[:int(len(X)*.8)]
+Y_train = Y6[:int(len(X)*.8)]
+X_test = X[int(len(X)*.8):]
+Y_test = Y6[int(len(X)*.8):]
+
+# train using all market data
+logit = linear_model.LogisticRegression(C=1)
+logit.fit(X_train, Y_train)
+
+# predict on test data
+predicted = logit.predict(X_test)
+
+# evaluate
+print('logistic regression 6wk prediction')
+print(metrics.f1_score(Y_test, predicted))
+print(logit.score(X_test,Y_test))
+
+
+
+## 8wk prediction
+
+# segment data into test and training sets
+X_train = X[:int(len(X)*.8)]
+Y_train = Y8[:int(len(X)*.8)]
+X_test = X[int(len(X)*.8):]
+Y_test = Y8[int(len(X)*.8):]
+
+# train using all market data
+logit = linear_model.LogisticRegression(C=1)
+logit.fit(X_train, Y_train)
+
+# predict on test data
+predicted = logit.predict(X_test)
+
+# evaluate
+print('logistic regression 8wk prediction')
+print(metrics.f1_score(Y_test, predicted))
+print(logit.score(X_test,Y_test))
+
+
+
+## 12wk prediction
+
+# segment data into test and training sets
+X_train = X[:int(len(X)*.8)]
+Y_train = Y12[:int(len(X)*.8)]
+X_test = X[int(len(X)*.8):]
+Y_test = Y12[int(len(X)*.8):]
+
+# train using all market data
+logit = linear_model.LogisticRegression(C=1)
+logit.fit(X_train, Y_train)
+
+# predict on test data
+predicted = logit.predict(X_test)
+
+# evaluate
+print('logistic regression 12wk prediction')
+print(metrics.f1_score(Y_test, predicted))
+print(logit.score(X_test,Y_test))
+
+
+# goldCOT_df.tail()
 
 
